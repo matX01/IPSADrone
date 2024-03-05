@@ -22,7 +22,7 @@ class TakeOff_Command(Command):
         super().__init__("Décoller()")
 
     def ExecuteCommand(self, Drone: IPSADrone):
-
+        print(Drone)
         Drone.TakeOff()
 
 class Land_Command(Command):
@@ -82,7 +82,7 @@ class Rotation_Command(Command):
 
     def ConvertIntoText(self) -> str:
 
-        return "Rotation([])".format(self.__Rotation)
+        return "Rotation({})".format(self.__Rotation)
 
     def ExecuteCommand(self, Drone: IPSADrone):
 
@@ -92,7 +92,7 @@ class Rotation_Command(Command):
 
         Drone.RotateCCW(self.__Rotation)
 
-class DroneCommandParser():
+class DroneCommandSequencer():
 
     __CommandList = []
     def __init__(self):
@@ -121,4 +121,3 @@ class DroneCommandParser():
             ReturnStr += el.ConvertIntoText() + "\n"
 
         return ReturnStr
-

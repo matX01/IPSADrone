@@ -1,14 +1,15 @@
 from .IPSATelloEngine import IPSADrone
 from .IPSATelloInterface import IPSATelloInterface
-from .CommandParser import DroneCommandParser
+from .CommandParser import DroneCommandSequencer
 from .CommandParser import Command
 from .CommandParser import TakeOff_Command
 from .CommandParser import Land_Command
 from .CommandParser import Translation_Command
+from .CommandParser import Rotation_Command
 
 __Interface = IPSATelloInterface()
 __Drone = IPSADrone(True)
-__CommParser = DroneCommandParser()
+__CommParser = DroneCommandSequencer()
 
 def Decoller() -> None:
 
@@ -32,7 +33,9 @@ def Translation(direction, distance: int) -> None:
 
 
 def Rotation(angle: int) -> None:
-    pass
+    Command = Rotation_Command(angle)
+
+    __CommParser.AppendCommand(Command)
 
 
 def Change_Altitude(valeur: int) -> None:
@@ -41,7 +44,13 @@ def Change_Altitude(valeur: int) -> None:
 
 def DroneMovementSequence(fcn) -> None:
     fcn()
-    PromptParsedCommands()
+
+    __Drone.TakeOff()
+    while(__CommParser.IsNextCommandAvailable()):
+
+        print(__CommParser.GetNextCommandName())
+
+        __CommParser.ExecuteNextCommand(__Drone)
 
     __Interface.MainLoop()
 

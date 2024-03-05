@@ -5,7 +5,7 @@ from IPSADrone import Translation
 from IPSADrone import Rotation
 from IPSADrone import Change_Altitude
 from IPSADrone import Decoller
-from IPSADrone import  Atterir
+from IPSADrone import Atterir
 
 def Sequence():
     # ===== ECRIRE EN DESSOUS =====
