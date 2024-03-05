@@ -4,10 +4,20 @@ import IPSADrone
 from IPSADrone import Translation
 from IPSADrone import Rotation
 from IPSADrone import Change_Altitude
-
+from IPSADrone import Decoller
+from IPSADrone import  Atterir
 
 def Sequence():
     # ===== ECRIRE EN DESSOUS =====
+
+    # =============================
+    # === DECOLLAGE/ATTERISSAGE ===
+    # =============================
+
+    Decoller()
+
+    Atterir()
+
 
     # ========================
     # === LES TRANSLATIONS ===
