@@ -14,4 +14,6 @@
 - Chrono
 - Case Position - vitesse du drone
 - un logo IPSA
-- place pour le visualiseur de tracé
+- place pour le visualiseur de tracé 
+  - Il me faudrait un affichage sous forme d'image (regarde Tkinter image)
+- Case Erreur

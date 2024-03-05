@@ -18,7 +18,6 @@ def Sequence():
 
     Atterir()
 
-    #Test
     # ========================
     # === LES TRANSLATIONS ===
     # ========================

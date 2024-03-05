@@ -1,53 +1,62 @@
-## Mathieu CUISSARD, 05/12/2023
+import tkinter
+import cv2
+import PIL.Image, PIL.ImageTk
+import time
+class App:
+    def __init__(self, window, window_title, video_source=0):
+        self.window = window
+        self.window.title(window_title)
+        self.video_source = video_source
+         # open video source (by default this will try to open the computer webcam)
+        self.vid = MyVideoCapture(self.video_source)
+         # Create a canvas that can fit the above video source size
+        self.canvas = tkinter.Canvas(window, width = self.vid.width, height = self.vid.height)
+        self.canvas.pack()
+            # Button that lets the user take a snapshot
+        self.btn_snapshot=tkinter.Button(window, text="Snapshot", width=50, command=self.snapshot)
+        self.btn_snapshot.pack(anchor=tkinter.CENTER, expand=True)
+            # After it is called once, the update method will be automatically called every delay milliseconds
+        self.delay = 5
+        self.update()
+        self.window.mainloop()
+    def snapshot(self):
+       # Get a frame from the video source
+        ret, frame = self.vid.get_frame()
+        if ret:
+           cv2.imwrite("frame-" + time.strftime("%d-%m-%Y-%H-%M-%S") + ".jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+    def update(self):
+       # Get a frame from the video source
+        ret, frame = self.vid.get_frame()
+        if ret:
+           self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+           self.canvas.create_image(0, 0, image = self.photo, anchor = tkinter.NW)
+           self.window.after(self.delay, self.update)
 
-import IPSADrone
-from IPSADrone import translation
-from IPSADrone import rotation
-from IPSADrone import change_altitude
+class MyVideoCapture:
+    def __init__(self, video_source=0):
+        # Open the video source
+        self.vid = cv2.VideoCapture(video_source)
+        if not self.vid.isOpened():
+            raise ValueError("Unable to open video source", video_source)
 
+        # Get video source width and height
+        self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    def get_frame(self):
+        if self.vid.isOpened():
+            ret, frame = self.vid.read()
+            if ret:
+                # Return a boolean success flag and the current frame converted to BGR
+                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            else:
+                return (ret, None)
+        else:
+            return None
 
-def Sequence():
-    # ===== ECRIRE EN DESSOUS =====
+    # Release the video source when the object is destroyed
+    def __del__(self):
+        if self.vid.isOpened():
+            self.vid.release()
 
-    # ========================
-    # === LES TRANSLATIONS ===
-    # ========================
-
-    # Pour déplacer le drone vers l'avant
-    # RELATIF A L'ORIENTATION DU DRONE
-
-    translation("AVANT", 100)  # déplacement vers l'avant de 100cm
-
-    # Pour déplacer le drone vers la gauche
-    # RELATIF A L'ORIENTAION DU DRONE
-
-    translation("GAUCHE", 100)  # déplacement vers la gauche de 100cm
-
-    # Pour déplacer le drone vers la droite
-    # RELATIF A L'ORIENTAION DU DRONE
-
-    translation("DROITE", 100)  # déplacement vers la droite de 100cm
-
-    # Pour déplacer le drone vers l'arrière
-    # RELATIF A L'ORIENTAION DU DRONE
-
-    translation("ARRIERE", 100)  # déplacement vers l'arrière de 100cm
-
-    # ========================
-    # ==== LES  ROTATIONS ====
-    # ========================
-
-    rotation(45)  # Rotation de 45° dans le sens trigonométrique (anti horaire)
-    rotation(-45)  # Rotation de 45° dans le sens horaire
-
-    # ========================
-    # ====== LA HAUTEUR ======
-    # ========================
-
-    change_altitude(10)  # va à 10cm du sol
-
-    # ===== ECRIRE AU DESSUS =====
-    pass
-
-
-IPSADrone.DroneMovementSequence(Sequence)
+# Create a window and pass it to the Application object
+App(tkinter.Tk(), "Tkinter and OpenCV","1.mkv")
