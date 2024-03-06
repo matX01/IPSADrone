@@ -1,4 +1,4 @@
-from .IPSATelloEngine import IPSADrone
+from IPSADrone.DroneHandling.IPSATelloEngine import IPSADrone
 
 
 
@@ -22,7 +22,6 @@ class TakeOff_Command(Command):
         super().__init__("Décoller()")
 
     def ExecuteCommand(self, Drone: IPSADrone):
-        print(Drone)
         Drone.TakeOff()
 
 class Land_Command(Command):
@@ -103,7 +102,7 @@ class DroneCommandSequencer():
         self.__CommandList.append(Comm)
     def IsNextCommandAvailable(self) -> bool:
 
-        return (self.__CommandList) != 0
+        return len(self.__CommandList) != 0
 
     def GetNextCommandName(self) -> str:
 
@@ -112,7 +111,7 @@ class DroneCommandSequencer():
 
     def ExecuteNextCommand(self,Drone: IPSADrone):
 
-        return self.__CommandList.pop(0).ExecuteCommand(IPSADrone)
+        return self.__CommandList.pop(0).ExecuteCommand(Drone)
 
     def __str__(self) -> str:
         ReturnStr = ""

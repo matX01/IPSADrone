@@ -8,6 +8,15 @@ from IPSADrone import Decoller
 from IPSADrone import Atterir
 
 def Sequence():
+
+    #Decoller()
+
+    Translation("AVANT",100)
+
+    Atterir()
+
+    """
+    
     # ===== ECRIRE EN DESSOUS =====
 
     # =============================
@@ -57,7 +66,7 @@ def Sequence():
 
     # ===== ECRIRE AU DESSUS =====
     pass
-
+    """
 
 IPSADrone.DroneMovementSequence(Sequence)
 

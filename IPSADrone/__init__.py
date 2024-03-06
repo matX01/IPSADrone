@@ -1,4 +1,4 @@
-from .IPSATelloEngine import IPSADrone
+from IPSADrone.DroneHandling.IPSATelloEngine import IPSADrone
 from .IPSATelloInterface import IPSATelloInterface
 from .CommandParser import DroneCommandSequencer
 from .CommandParser import Command
@@ -45,14 +45,13 @@ def Change_Altitude(valeur: int) -> None:
 def DroneMovementSequence(fcn) -> None:
     fcn()
 
-    __Drone.TakeOff()
     while(__CommParser.IsNextCommandAvailable()):
 
         print(__CommParser.GetNextCommandName())
 
         __CommParser.ExecuteNextCommand(__Drone)
 
-    __Interface.MainLoop()
+    #__Interface.MainLoop()
 
     pass
 
