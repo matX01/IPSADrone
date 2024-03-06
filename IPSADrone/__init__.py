@@ -1,11 +1,12 @@
-from IPSADrone.DroneHandling.IPSATelloEngine import IPSADrone
-from .IPSATelloInterface import IPSATelloInterface
+from .DroneHandling.IPSATelloHandler import IPSADrone
+from .UI.IPSATelloInterface import IPSATelloInterface
 from .CommandParser import DroneCommandSequencer
 from .CommandParser import Command
 from .CommandParser import TakeOff_Command
 from .CommandParser import Land_Command
 from .CommandParser import Translation_Command
 from .CommandParser import Rotation_Command
+from .DroneHandling.DronePathSim import IPSADronePathSimulator
 
 __Interface = IPSATelloInterface()
 __Drone = IPSADrone(True)
@@ -47,13 +48,18 @@ def DroneMovementSequence(fcn) -> None:
 
     while(__CommParser.IsNextCommandAvailable()):
 
-        print(__CommParser.GetNextCommandName())
+        #print(__CommParser.GetNextCommandName())
 
         __CommParser.ExecuteNextCommand(__Drone)
 
-    #__Interface.MainLoop()
+    __PathSim = __Drone.GetPathSim()
 
-    pass
+    print(__PathSim)
+
+
+    __Interface.MainLoop()
+
+
 
 def PromptParsedCommands() -> None:
 

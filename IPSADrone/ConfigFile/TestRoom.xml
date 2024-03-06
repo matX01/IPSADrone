@@ -1,0 +1,32 @@
+<BoundingBox>
+    <OverallSize>
+        <Size>[500,500]</Size>
+    </OverallSize>
+    <LaunchPad>
+            <Pos_BottomLeft> [245,245] </Pos_BottomLeft>
+            <Pos_TopRight> [255,255]</Pos_TopRight>
+            <ForwardVect> [0,1,0] </ForwardVect>
+    </LaunchPad>
+    <LandPad>
+        <Pos_BottomLeft> [100,100]</Pos_BottomLeft>
+        <Pos_TopRight> [200,200]</Pos_TopRight>
+    </LandPad>
+    <ExclusionZones>
+        <Box ID ="1">
+            <Pos_BottomLeft> [0,0] </Pos_BottomLeft>
+            <Pos_TopRight> [50,500]</Pos_TopRight>
+        </Box>
+        <Box ID = "2">
+            <Pos_BottomLeft> [0,0] </Pos_BottomLeft>
+            <Pos_TopRight>[500,50] </Pos_TopRight>
+        </Box>
+        <Box ID = "3">
+            <Pos_BottomLeft> [450,0] </Pos_BottomLeft>
+            <Pos_TopRight> [500,500] </Pos_TopRight>
+        </Box>
+        <Box>
+            <Pos_BottomLeft> [0,450] </Pos_BottomLeft>
+            <Pos_TopRight> [500,500] </Pos_TopRight>
+        </Box>
+    </ExclusionZones>
+</BoundingBox>

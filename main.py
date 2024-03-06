@@ -9,13 +9,18 @@ from IPSADrone import Atterir
 
 def Sequence():
 
-    #Decoller()
+    Decoller()
 
     Translation("AVANT",100)
+    Translation("ARRIERE", 100)
+    Rotation(45)
+    Translation("GAUCHE",100)
+    Translation("DROITE",100)
+    #Translation("GAUCHE",100)
 
     Atterir()
 
-    """
+
     
     # ===== ECRIRE EN DESSOUS =====
 
@@ -25,7 +30,7 @@ def Sequence():
 
     Decoller()
 
-    Atterir()
+
 
     # ========================
     # === LES TRANSLATIONS ===
@@ -64,9 +69,11 @@ def Sequence():
 
     Change_Altitude(10)  # va à 10cm du sol
 
+    Atterir()
+
     # ===== ECRIRE AU DESSUS =====
     pass
-    """
+
 
 IPSADrone.DroneMovementSequence(Sequence)
 

@@ -17,3 +17,5 @@
 - place pour le visualiseur de tracé 
   - Il me faudrait un affichage sous forme d'image (regarde Tkinter image)
 - Case Erreur
+- Pourcentage de batterie
+- 

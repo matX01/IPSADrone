@@ -1,3 +1,5 @@
 djitellopy
 numpy
 tk
+opencv-python
+xmltodict

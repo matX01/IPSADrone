@@ -1,4 +1,4 @@
-from IPSADrone.DroneHandling.IPSATelloEngine import IPSADrone
+from IPSADrone.DroneHandling.IPSATelloHandler import IPSADrone
 
 
 

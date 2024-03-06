@@ -2,11 +2,11 @@ import djitellopy as tello
 import time
 from .DroneMvtSim import DroneMovement
 class TelloSim(tello.Tello):
-    __DroneMovementSim = DroneMovement()
+    #__DroneMovementSim = DroneMovement()
 
     ## CONSTANTS
 
-    __FASTMODE = True
+    __PromptPos = False
 
     __TAKEOFF_TIME = 5
     __TAKEOFF_ALTITUDE = 100
@@ -14,16 +14,26 @@ class TelloSim(tello.Tello):
     __TRANSLATE_COEF = 0.02
     __ROTATE_COEF = 1 / 90
 
-    def __int__(self):
 
+
+
+    def __init__(self, PromptPos = False,FastMode = False):
         super().__init__()
+        print("[SIM] Starting sim ...")
 
-        if (self.__FASTMODE):
+        self.__DroneMovementSim = DroneMovement()
 
+        self.__PromptPos = PromptPos
+
+
+        if (FastMode):
             self.__TAKEOFF_TIME = 0.1
             self.__LAND_TIME = 0.1
             self.__TRANSLATE_COEF = 0.0005
             self.__ROTATE_COEF = 1 / 900
+
+    def connect(self, wait_for_state=True):
+        pass
 
     def move_left(self, x: int):
         print("[SIM] Moving LEFT")
@@ -35,7 +45,8 @@ class TelloSim(tello.Tello):
 
         self.__DroneMovementSim.MoveLeft(x)
 
-        self.__DroneMovementSim.PrintPos()
+        if (self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def move_right(self, x: int):
         print("[SIM] Moving RIGHT")
@@ -46,7 +57,8 @@ class TelloSim(tello.Tello):
 
         self.__DroneMovementSim.MoveRight(x)
 
-        self.__DroneMovementSim.PrintPos()
+        if (self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def move_back(self, x: int):
         print("[SIM] Moving BACK")
@@ -57,7 +69,8 @@ class TelloSim(tello.Tello):
 
         self.__DroneMovementSim.MoveBackward(x)
 
-        self.__DroneMovementSim.PrintPos()
+        if (self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def move_forward(self, x: int):
         print("[SIM] Moving FORWARD")
@@ -69,29 +82,35 @@ class TelloSim(tello.Tello):
 
         self.__DroneMovementSim.MoveForward(x)
 
-        self.__DroneMovementSim.PrintPos()
+        if(self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def rotate_clockwise(self, x: int):
         print("[SIM] Rotating CW")
         if(not self.is_flying):
             print("[SIM] -WARN- Drone is not flying")
             return
+
         time.sleep(self.__ROTATE_COEF * x)
 
         self.__DroneMovementSim.RotateCW(x)
 
-        self.__DroneMovementSim.PrintPos()
+        if (self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def rotate_counter_clockwise(self, x: int):
         print("[SIM] Rotating CCW")
+
         if(not self.is_flying):
             print("[SIM] -WARN- Drone is not flying")
             return
+
         time.sleep(self.__ROTATE_COEF * x)
 
         self.__DroneMovementSim.RotateCCW(x)
 
-        self.__DroneMovementSim.PrintPos()
+        if (self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def takeoff(self):
         print("[SIM] TAKEOFF")
@@ -100,6 +119,8 @@ class TelloSim(tello.Tello):
         self.__DroneMovementSim.SetHeight(self.__TAKEOFF_ALTITUDE)
 
         self.is_flying = True
+        if(self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
     def land(self):
         print("[SIM] LAND")
@@ -108,4 +129,6 @@ class TelloSim(tello.Tello):
         self.__DroneMovementSim.SetHeight(0)
 
         self.is_flying = False
+        if(self.__PromptPos):
+            self.__DroneMovementSim.PrintPos()
 
