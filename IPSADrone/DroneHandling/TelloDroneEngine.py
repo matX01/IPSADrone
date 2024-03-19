@@ -1,2 +1,6 @@
-from .IPSATelloHandler import IPSADrone
+
+
+
+def StartSequence() -> None:
+    pass
 

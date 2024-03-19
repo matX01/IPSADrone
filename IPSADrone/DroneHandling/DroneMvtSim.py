@@ -25,26 +25,37 @@ class DroneMovement():
         self.Position[2] = x
         self.HandleMovement()
     def MoveForward(self, x: int) -> None:
-        self.Position += self.ForwardVect * x
+        self.Position = self.CalculateMoveForward(x)
         self.HandleMovement()
+
+    def CalculateMoveForward(self,x: int) -> np.ndarray:
+        return self.Position + self.ForwardVect * x
+
 
     def MoveBackward(self, x: int) -> None:
-        self.Position += self.ForwardVect * -x
+        self.Position = self.CalculateMoveBackward(x)
         self.HandleMovement()
+    def CalculateMoveBackward(self,x: int) -> np.ndarray:
+        return self.Position + self.ForwardVect * -x
+
 
     def MoveLeft(self, x: int) -> None:
-        UpVect = np.array([0, 0, 1])
-
-        LeftVect = -np.cross(self.ForwardVect, UpVect)
-        self.Position += LeftVect * x
+        self.Position = self.CalculateMoveLeft(x)
         self.HandleMovement()
+
+    def CalculateMoveLeft(self,x: int) -> np.ndarray:
+        UpVect = np.array([0, 0, 1])
+        LeftVect = -np.cross(self.ForwardVect, UpVect)
+        return self.Position + LeftVect * x
 
     def MoveRight(self, x: int) -> None:
-        UpVect = np.array([0, 0, 1])
-
-        RightVect = np.cross(self.ForwardVect, UpVect)
-        self.Position += RightVect * x
+        self.Position = self.CalculateMoveRight(x)
         self.HandleMovement()
+
+    def CalculateMoveRight(self,x: int) -> np.ndarray:
+        UpVect = np.array([0, 0, 1])
+        RightVect = np.cross(self.ForwardVect, UpVect)
+        return self.Position + RightVect * x
 
     def Rotate(self, angle: int) -> None:
         x_rad = angle * np.pi / 180
@@ -54,7 +65,7 @@ class DroneMovement():
         self.ForwardVect[0:2] = (RotateMat @ self.ForwardVect[0:2].T)
 
     def RotateCW(self, angle: int) -> None:
-        self.Rotate(-angle)
+        self.Rotate(angle)
 
     def RotateCCW(self, angle: int) -> None:
         self.Rotate(angle)

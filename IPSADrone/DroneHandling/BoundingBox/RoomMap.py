@@ -21,12 +21,63 @@ class BoundingBox:
         #XMLToParse.get()
 
         pass
-    def IsPointInBox(self,Point: np.ndarray) -> bool:
 
-        return (Point[0] > self.BottomLeft[0] and
-                Point[1] > self.BottomLeft[1] and
-                Point[0] < self.TopRight[0] and
-                Point[1] < self.TopRight[1])
+    def __str__(self) -> str:
+
+        return str(self.BottomLeft) + " : " + str(self.TopRight)
+    def TestLine(self,Point1: np.ndarray,Point2: np.ndarray,Point3: np.ndarray,Point4: np.ndarray) -> bool:
+
+        if(np.linalg.norm(np.cross((Point2 - Point1),(Point4 - Point3))) == 0):
+            return False
+
+
+        uA = (((Point4[0] - Point3[0]) *
+              (Point1[1] - Point3[1]) -
+               (Point4[1] - Point3[1]) *
+               (Point1[0] - Point3[0])) /
+              ((Point4[1] - Point3[1]) *
+               (Point2[0] - Point1[0]) -
+               (Point4[0] - Point3[0]) *
+               (Point2[1] - Point1[1])))
+
+        uB = (((Point2[0] - Point1[0]) *
+               (Point1[1] - Point3[1]) -
+               (Point2[1] - Point1[1]) *
+               (Point1[0] - Point3[0]))/
+              ((Point4[1] - Point3[1]) *
+               (Point2[0] - Point1[0]) -
+               (Point4[0] - Point3[0]) *
+               (Point2[1] - Point1[1])))
+
+        return uA >= 0.0 and uA <= 1.0 and uB >= 0.0 and uB <= 1.0
+
+    def IsLineIntersectBox(self,Point1: np.ndarray, Point2: np.ndarray) -> bool:
+
+        Line1A = np.array([self.BottomLeft[0],self.BottomLeft[1]])
+        Line1B = np.array([self.TopRight[0],self.BottomLeft[1]])
+
+        Line2A = Line1A
+        Line2B = np.array([self.BottomLeft[0],self.TopRight[1]])
+
+        Line3A = self.TopRight
+        Line3B = Line2B
+
+        Line4A = Line1B
+        Line4B = Line3A
+
+
+        if(self.TestLine(Line1A,Line1B,Point1,Point2)):
+            return True
+        if(self.TestLine(Line2A,Line2B,Point1,Point2)):
+            return True
+        if(self.TestLine(Line3A,Line3B,Point1,Point2)):
+            return True
+        if(self.TestLine(Line4A,Line4B,Point1,Point2)):
+            return True
+        return False
+
+
+
 
     def GetCenter(self) -> np.ndarray:
 
@@ -81,7 +132,7 @@ class RoomMap():
         self.__ExclusionZones.append(ExclusionZone(np.array([0, 0]), np.array([500, 50])))
         self.__ExclusionZones.append(ExclusionZone(np.array([450,0]), np.array([500,500])))
         self.__ExclusionZones.append(ExclusionZone(np.array([0,450]), np.array([500,500])))
-
+        self.__ExclusionZones.append(ExclusionZone(np.array([300, 300]), np.array([320, 320])))
         self.__GenerateImage()
 
     def LoadMapWithXML(self,XMLPath: str) -> None:
@@ -110,3 +161,16 @@ class RoomMap():
     def GetLaunchPadCenter(self) -> np.ndarray:
 
         return self.__LaunchPad.GetCenter()
+
+    def IsMovementAllowed(self,CurrentPosition: np.ndarray,PositionToTry: np.ndarray) -> bool:
+
+        if(PositionToTry[0] < 0 or PositionToTry[1] < 0 or PositionToTry[0] > self.__Size[0] or PositionToTry[1] > self.__Size[1]):
+            return False
+
+        for el in self.__ExclusionZones:
+
+            if(el.IsLineIntersectBox(CurrentPosition[0:2],PositionToTry[0:2])):
+                print(el)
+                return False
+
+        return True

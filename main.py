@@ -6,22 +6,43 @@ from IPSADrone import Rotation
 from IPSADrone import Change_Altitude
 from IPSADrone import Decoller
 from IPSADrone import Atterir
+import numpy as np
 
 def Sequence():
 
+
     Decoller()
 
-    Translation("AVANT",100)
-    Translation("ARRIERE", 100)
+    Translation("AVANT", 100)
     Rotation(45)
-    Translation("GAUCHE",100)
-    Translation("DROITE",100)
-    #Translation("GAUCHE",100)
+    Translation("GAUCHE", 100)
+    Translation("ARRIERE", 100)
+    Translation("DROITE", 100)
 
     Atterir()
 
+    """Translation("AVANT",100)
+    Translation("GAUCHE",50)
+    Rotation(45)
+    Translation("ARRIERE",150)
+    Rotation(-45)
 
-    
+    Translation("AVANT",100)
+    Rotation(-15)
+    Translation("AVANT", 100)
+    Rotation(45)
+    Translation("AVANT", 100)
+
+    Rotation(120)
+    Translation("AVANT", 100)
+    Rotation(-80)
+    Translation("GAUCHE", 200)
+    Atterir()"""
+
+
+
+
+    """ 
     # ===== ECRIRE EN DESSOUS =====
 
     # =============================
@@ -70,7 +91,7 @@ def Sequence():
     Change_Altitude(10)  # va à 10cm du sol
 
     Atterir()
-
+    """
     # ===== ECRIRE AU DESSUS =====
     pass
 

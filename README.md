@@ -6,16 +6,9 @@
 
 - Bouton Cancel (freeze position)
 - Bouton Abort (coupe moteurs)
-- Une case avec la commande en cours
-  - CF Parser
-- Une case avec un pourcentage d'avancement
-  - CF Parser
 - Un bouton start
 - Chrono
-- Case Position - vitesse du drone
 - un logo IPSA
 - place pour le visualiseur de tracé 
   - Il me faudrait un affichage sous forme d'image (regarde Tkinter image)
 - Case Erreur
-- Pourcentage de batterie
-- 

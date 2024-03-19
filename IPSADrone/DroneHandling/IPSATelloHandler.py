@@ -10,7 +10,7 @@ def StartBackend():
 
 
 
-
+#Passwd telloL15
 
 class IPSADrone:
 
@@ -52,6 +52,7 @@ class IPSADrone:
         if(not self.IsAvailable()):
             return
         self.TelloDrone.takeoff()
+
         self.__PathSim.SetHeight(100)   #FIXME Magic value
         self.__IsFlying = True
 
@@ -71,6 +72,12 @@ class IPSADrone:
             print("[TELLO] -WARN- Drone is not flying !")
             return
 
+        NextPotentialPos = self.__PathSim.CalculateMoveLeft(Distance)
+
+        if (not self.__PathSim.IsMovementAllowed(self.__PathSim.Position,NextPotentialPos)):
+            print("[TELLO] -WARN- Movement not allowed !")
+            return
+
         self.TelloDrone.move_left(Distance)
         self.__PathSim.MoveLeft(Distance)
 
@@ -80,6 +87,13 @@ class IPSADrone:
 
         if (not self.__IsFlying):
             print("[TELLO] -WARN- Drone is not flying !")
+            return
+
+
+        NextPotentialPos = self.__PathSim.CalculateMoveRight(Distance)
+
+        if (not self.__PathSim.IsMovementAllowed(self.__PathSim.Position,NextPotentialPos)):
+            print("[TELLO] -WARN- Movement not allowed !")
             return
 
         self.TelloDrone.move_right(Distance)
@@ -94,9 +108,14 @@ class IPSADrone:
             print("[TELLO] -WARN- Drone is not flying !")
             return
 
-        self.TelloDrone.move_forward(Distance)
+        NextPotentialPos = self.__PathSim.CalculateMoveForward(Distance)
+        if (not self.__PathSim.IsMovementAllowed(self.__PathSim.Position, NextPotentialPos)):
+            print("[TELLO] -WARN- Movement not allowed !")
+            return
 
+        self.TelloDrone.move_forward(Distance)
         self.__PathSim.MoveForward(Distance)
+
 
     def MoveBackward(self,Distance: int):
         if (not self.IsAvailable()):
@@ -104,6 +123,12 @@ class IPSADrone:
 
         if (not self.__IsFlying):
             print("[TELLO] -WARN- Drone is not flying !")
+            return
+
+        NextPotentialPos = self.__PathSim.CalculateMoveBackward(Distance)
+
+        if (not self.__PathSim.IsMovementAllowed(self.__PathSim.Position,NextPotentialPos)):
+            print("[TELLO] -WARN- Movement not allowed !")
             return
 
         self.TelloDrone.move_back(Distance)

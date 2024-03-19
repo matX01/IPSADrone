@@ -1,20 +1,21 @@
 import djitellopy as tello
 import time
 from .DroneMvtSim import DroneMovement
+
+
 class TelloSim(tello.Tello):
+
     #__DroneMovementSim = DroneMovement()
 
-    ## CONSTANTS
+    # CONSTANTS
 
     __PromptPos = False
 
     __TAKEOFF_TIME = 5
-    __TAKEOFF_ALTITUDE = 100
+    __TAKEOFF_ALTITUDE = 150
     __LAND_TIME = 3
     __TRANSLATE_COEF = 0.02
     __ROTATE_COEF = 1 / 90
-
-
 
 
     def __init__(self, PromptPos = False,FastMode = False):
@@ -37,7 +38,7 @@ class TelloSim(tello.Tello):
 
     def move_left(self, x: int):
         print("[SIM] Moving LEFT")
-        if(not self.is_flying):
+        if (not self.is_flying):
             print("[SIM] -WARN- Drone is not flying")
             return
 
@@ -116,6 +117,8 @@ class TelloSim(tello.Tello):
         print("[SIM] TAKEOFF")
         time.sleep(self.__TAKEOFF_TIME)
 
+
+
         self.__DroneMovementSim.SetHeight(self.__TAKEOFF_ALTITUDE)
 
         self.is_flying = True
@@ -131,4 +134,3 @@ class TelloSim(tello.Tello):
         self.is_flying = False
         if(self.__PromptPos):
             self.__DroneMovementSim.PrintPos()
-
