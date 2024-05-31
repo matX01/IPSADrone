@@ -13,11 +13,10 @@ def Sequence():
 
     Decoller()
 
-    Translation("AVANT", 100)
-    Rotation(45)
-    Translation("GAUCHE", 100)
-    Translation("ARRIERE", 100)
-    Translation("DROITE", 100)
+    Translation("AVANT", 200)
+    Translation("DROITE", 200)
+    Translation("ARRIERE", 200)
+    Translation("GAUCHE", 200)
 
     Atterir()
 

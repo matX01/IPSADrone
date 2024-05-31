@@ -122,17 +122,19 @@ class RoomMap():
 
     def LoadTestMap(self) -> None:
         pass
-        #FIXME FOR TEST ONLY
-        self.__Size = np.array([500,500])
 
-        self.__LaunchPad = LaunchPadZone(np.array([245,245]),np.array([255,255]))
+        #FIXME FOR TEST ONLY
+        self.__Size = np.array([270,270])
+
+        self.__LaunchPad = LaunchPadZone(np.array([30,30]),np.array([40,40]))
         self.__LandPad = LandPadZone(np.array([100, 100]), np.array([200, 200]))
 
-        self.__ExclusionZones.append(ExclusionZone(np.array([0,0]),np.array([50,500])))
-        self.__ExclusionZones.append(ExclusionZone(np.array([0, 0]), np.array([500, 50])))
-        self.__ExclusionZones.append(ExclusionZone(np.array([450,0]), np.array([500,500])))
-        self.__ExclusionZones.append(ExclusionZone(np.array([0,450]), np.array([500,500])))
-        self.__ExclusionZones.append(ExclusionZone(np.array([300, 300]), np.array([320, 320])))
+
+        self.__ExclusionZones.append(ExclusionZone(np.array([0,0]),np.array([20,270])))
+        self.__ExclusionZones.append(ExclusionZone(np.array([0, 0]), np.array([270, 20])))
+        self.__ExclusionZones.append(ExclusionZone(np.array([250,0]), np.array([270,270])))
+        self.__ExclusionZones.append(ExclusionZone(np.array([0,250]), np.array([270,270])))
+        #self.__ExclusionZones.append(ExclusionZone(np.array([300, 300]), np.array([320, 320])))
         self.__GenerateImage()
 
     def LoadMapWithXML(self,XMLPath: str) -> None:
@@ -143,7 +145,7 @@ class RoomMap():
         self.__Image = 255 * np.ones((self.__Size[0],self.__Size[1], 3))
 
         self.__LaunchPad.DrawBox(self.__Image)
-        self.__LandPad.DrawBox(self.__Image)
+        #self.__LandPad.DrawBox(self.__Image)
         for el in self.__ExclusionZones:
 
             el.DrawBox(self.__Image)

@@ -9,7 +9,7 @@ from .CommandParser import Rotation_Command
 from .DroneHandling.DronePathSim import IPSADronePathSimulator
 
 __Interface = IPSATelloInterface()
-__Drone = IPSADrone()
+__Drone = IPSADrone(True)
 __CommParser = DroneCommandSequencer()
 
 def Decoller() -> None:
